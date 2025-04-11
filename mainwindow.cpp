@@ -161,23 +161,21 @@ void MainWindow::AppliquerModification() {
         return;
     }
 
-    if (!db.isOpen())
-    {
-        QMessageBox::critical(this, "Erreur", "La base de données n'est pas ouverte.");
-        return;
+    if (idDispositif == 1) {
+        QSqlQuery queryProtocole(db);
+        queryProtocole.prepare("INSERT INTO Protocoles_communication (ID_Protocole_PK, Nom_protocole) VALUES (1, 'MQTT');");
+        queryProtocole.addBindValue(idDispositif);
+
+        if (!queryProtocole.exec()) {
+            QSqlError error = queryProtocole.lastError();
+            QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la modification de l'ID Protocole: %1").arg(error.text()));
+            qDebug() << "Erreur SQL (ID Protocole):" << error.text() << " Requête: " << queryProtocole.lastQuery();
+        } else {
+            QMessageBox::information(this, "Succès", "ID Protocole modifié avec succès.");
+        }
     }
 
-
-    if (idDispositif == 0)
-    {
-        QSqlQuery query(db);
-        query.prepare("INSERT INTO Dispositif_Passerelle (ID_Protocole_FK)");
-        query.addBindValue(idDispositif == 0 ? QVariant() : idDispositif);
-
-        QMessageBox::information(this, "Succes", "Valeur id protocole modifier");
-    }
-
-  /*  if (idDispositif == 1)
+    /*  if (idDispositif == 1)
     {
         QMessageBox::warning(this, "Avertissement", "Veuillez sélectionner un ID de Dispositif.");
         return;
@@ -188,6 +186,12 @@ void MainWindow::AppliquerModification() {
         QMessageBox::warning(this, "Avertissement", "Veuillez sélectionner un ID de Dispositif.");
         return;
     }*/
+
+    if (!db.isOpen())
+    {
+        QMessageBox::critical(this, "Erreur", "La base de données n'est pas ouverte.");
+        return;
+    }
 
     QSqlQuery query(db);
     query.prepare("INSERT INTO Dispositif_Passerelle (ID_Dispositif_PK,"
@@ -233,8 +237,6 @@ void MainWindow::AppliquerModification() {
                   "Periode_inst = IFNULL(?, Periode_inst),"
                   "Periode_moyenne = IFNULL(?, Periode_moyenne),"
                   "Periode_courbe = IFNULL(?, Periode_courbe)");
-
-
 
     // Première série de addBindValue()
     query.addBindValue(idDispositif);
@@ -283,7 +285,7 @@ void MainWindow::AppliquerModification() {
 
     if (!query.exec()) {
         QSqlError error = query.lastError();
-        QMessageBox::critical(this, "Erreur SQL", QString("Entrer des informations"));
+        QMessageBox::critical(this, "Erreur SQL", QString("requete échoué"));
         qDebug() << "Erreur SQL (AppliquerModification):" << error.text() << " Requête: " << query.lastQuery();
     } else {
         QMessageBox::information(this, "Succès", "Données mises à jour avec succès.");
