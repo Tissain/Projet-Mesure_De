@@ -49,12 +49,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->comboBoxStatus1->setVisible(false);
     ui->comboBoxStatus2->setVisible(false);
     ui->comboBoxStatus3->setVisible(false);
-    ui->comboBoxUsage1->setVisible(false);
-    ui->comboBoxUsage2->setVisible(false);
-    ui->comboBoxUsage3->setVisible(false);
-    ui->usage1->setVisible(false);
-    ui->usage2->setVisible(false);
-    ui->usage3->setVisible(false);
     ui->TypeCharge->setVisible(false);
     ui->comboBoxCharge->setVisible(false);
     ui->PeriodeIntegrationInst->setVisible(false);
@@ -112,15 +106,6 @@ void MainWindow::setupUi() {
     ui->comboBoxStatus3->addItem("", -1);
     ui->comboBoxStatus3->addItem("Activé", 1);
     ui->comboBoxStatus3->addItem("Desactivé", 0);
-    ui->comboBoxUsage1->addItem("", -1);
-    ui->comboBoxUsage1->addItem("Activé", 1);
-    ui->comboBoxUsage1->addItem("Desactivé", 0);
-    ui->comboBoxUsage2->addItem("", -1);
-    ui->comboBoxUsage2->addItem("Activé", 1);
-    ui->comboBoxUsage2->addItem("Desactivé", 0);
-    ui->comboBoxUsage3->addItem("", -1);
-    ui->comboBoxUsage3->addItem("Activé", 1);
-    ui->comboBoxUsage3->addItem("Desactivé", 0);
     ui->comboBoxCharge->addItem("", -1);
     ui->comboBoxCharge->addItem("monophasé 1P+N-1TC (0)", 0);
     ui->comboBoxCharge->addItem("triphasé 3P+N-3TC (1)", 1);
@@ -149,9 +134,6 @@ void MainWindow::AppliquerModification() {
     int status1 = ui->comboBoxStatus1->currentData().toInt();
     int status2 = ui->comboBoxStatus2->currentData().toInt();
     int status3 = ui->comboBoxStatus3->currentData().toInt();
-    int usage1 = ui->comboBoxUsage1->currentData().toInt();
-    int usage2 = ui->comboBoxUsage2->currentData().toInt();
-    int usage3 = ui->comboBoxUsage3->currentData().toInt();
     int phase = ui->comboBoxCharge->currentData().toInt();
     int idDispositif = ui->PrimaryKey->currentData().toInt();
 
@@ -161,31 +143,33 @@ void MainWindow::AppliquerModification() {
         return;
     }
 
-    if (idDispositif == 1) {
+        if (idDispositif == 0) {
         QSqlQuery queryProtocole(db);
-        queryProtocole.prepare("INSERT INTO Protocoles_communication (ID_Protocole_PK, Nom_protocole) VALUES (1, 'MQTT');");
-        queryProtocole.addBindValue(idDispositif);
+        queryProtocole.prepare("UPDATE `Dispositif_Passerelle` SET `ID_Protocole_FK` = '0' WHERE `Dispositif_Passerelle`.`ID_Dispositif_PK` = 0;");
+        queryProtocole.addBindValue(idDispositif == -1 ? QVariant() : idDispositif);
 
         if (!queryProtocole.exec()) {
             QSqlError error = queryProtocole.lastError();
             QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la modification de l'ID Protocole: %1").arg(error.text()));
             qDebug() << "Erreur SQL (ID Protocole):" << error.text() << " Requête: " << queryProtocole.lastQuery();
         } else {
-            QMessageBox::information(this, "Succès", "ID Protocole modifié avec succès.");
+            QMessageBox::information(this, "Succès", "Type de Protocole envoyer");
         }
     }
 
-    /*  if (idDispositif == 1)
-    {
-        QMessageBox::warning(this, "Avertissement", "Veuillez sélectionner un ID de Dispositif.");
-        return;
-    }
+        if (idDispositif == 1) {
+            QSqlQuery queryProtocole(db);
+            queryProtocole.prepare("UPDATE `Dispositif_Passerelle` SET `ID_Protocole_FK` = '1' WHERE `Dispositif_Passerelle`.`ID_Dispositif_PK` = 1;");
+            queryProtocole.addBindValue(idDispositif == -1 ? QVariant() : idDispositif);
 
-    if (idDispositif == 2)
-    {
-        QMessageBox::warning(this, "Avertissement", "Veuillez sélectionner un ID de Dispositif.");
-        return;
-    }*/
+            if (!queryProtocole.exec()) {
+                QSqlError error = queryProtocole.lastError();
+                QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la modification de l'ID Protocole: %1").arg(error.text()));
+                qDebug() << "Erreur SQL (ID Protocole):" << error.text() << " Requête: " << queryProtocole.lastQuery();
+            } else {
+                QMessageBox::information(this, "Succès", "Type de Protocole envoyer");
+            }
+        }
 
     if (!db.isOpen())
     {
@@ -208,9 +192,6 @@ void MainWindow::AppliquerModification() {
                   "Statut_Capteur_1,"
                   "Statut_Capteur_2,"
                   "Statut_Capteur_3,"
-                  "usage_Capteur_1,"
-                  "usage_Capteur_2,"
-                  "usage_Capteur_3,"
                   "Type_charge,"
                   "Periode_inst,"
                   "Periode_moyenne,"
@@ -230,9 +211,6 @@ void MainWindow::AppliquerModification() {
                   "Statut_Capteur_1 = IFNULL(?, Statut_Capteur_1),"
                   "Statut_Capteur_2 = IFNULL(?, Statut_Capteur_2),"
                   "Statut_Capteur_3 = IFNULL(?, Statut_Capteur_3),"
-                  "usage_Capteur_1 = IFNULL(?, usage_Capteur_1),"
-                  "usage_Capteur_2 = IFNULL(?, usage_Capteur_2),"
-                  "usage_Capteur_3 = IFNULL(?, usage_Capteur_3),"
                   "Type_charge = IFNULL(?, Type_charge),"
                   "Periode_inst = IFNULL(?, Periode_inst),"
                   "Periode_moyenne = IFNULL(?, Periode_moyenne),"
@@ -253,9 +231,6 @@ void MainWindow::AppliquerModification() {
     query.addBindValue(status1 == -1 ? QVariant() : status1);
     query.addBindValue(status2 == -1 ? QVariant() : status2);
     query.addBindValue(status3 == -1 ? QVariant() : status3);
-    query.addBindValue(usage1 == -1 ? QVariant() : usage1);
-    query.addBindValue(usage2 == -1 ? QVariant() : usage2);
-    query.addBindValue(usage3 == -1 ? QVariant() : usage3);
     query.addBindValue(phase == -1 ? QVariant() : phase);
     query.addBindValue(PeriodeIntInst.isEmpty() ? QVariant() : PeriodeIntInst);
     query.addBindValue(PeriodeIntMoy.isEmpty() ? QVariant() : PeriodeIntMoy);
@@ -275,9 +250,6 @@ void MainWindow::AppliquerModification() {
     query.addBindValue(status1 == -1 ? QVariant() : status1);
     query.addBindValue(status2 == -1 ? QVariant() : status2);
     query.addBindValue(status3 == -1 ? QVariant() : status3);
-    query.addBindValue(usage1 == -1 ? QVariant() : usage1);
-    query.addBindValue(usage2 == -1 ? QVariant() : usage2);
-    query.addBindValue(usage3 == -1 ? QVariant() : usage3);
     query.addBindValue(phase == -1 ? QVariant() : phase);
     query.addBindValue(PeriodeIntInst.isEmpty() ? QVariant() : PeriodeIntInst);
     query.addBindValue(PeriodeIntMoy.isEmpty() ? QVariant() : PeriodeIntMoy);
@@ -359,12 +331,6 @@ void MainWindow::acquisitionModelButtonClicked() {
     ui->comboBoxStatus1->setVisible(true);
     ui->comboBoxStatus2->setVisible(true);
     ui->comboBoxStatus3->setVisible(true);
-    ui->comboBoxUsage1->setVisible(true);
-    ui->comboBoxUsage2->setVisible(true);
-    ui->comboBoxUsage3->setVisible(true);
-    ui->usage1->setVisible(true);
-    ui->usage2->setVisible(true);
-    ui->usage3->setVisible(true);
     ui->TypeCharge->setVisible(true);
     ui->comboBoxCharge->setVisible(true);
 }
@@ -384,12 +350,6 @@ void MainWindow::returnButtonClicked2()
     ui->comboBoxStatus1->setVisible(false);
     ui->comboBoxStatus2->setVisible(false);
     ui->comboBoxStatus3->setVisible(false);
-    ui->comboBoxUsage1->setVisible(false);
-    ui->comboBoxUsage2->setVisible(false);
-    ui->comboBoxUsage3->setVisible(false);
-    ui->usage1->setVisible(false);
-    ui->usage2->setVisible(false);
-    ui->usage3->setVisible(false);
     ui->TypeCharge->setVisible(false);
     ui->comboBoxCharge->setVisible(false);
     resetInputFields(); // Appel de la fonction de réinitialisation
@@ -444,10 +404,6 @@ void MainWindow::resetInputFields()
     ui->comboBoxStatus1->setCurrentIndex(0);
     ui->comboBoxStatus2->setCurrentIndex(0);
     ui->comboBoxStatus3->setCurrentIndex(0);
-    ui->comboBoxUsage1->setCurrentIndex(0);
-    ui->comboBoxUsage2->setCurrentIndex(0);
-    ui->comboBoxUsage3->setCurrentIndex(0);
     ui->comboBoxCharge->setCurrentIndex(0);
     ui->PrimaryKey->setCurrentIndex(0);
 }
-
