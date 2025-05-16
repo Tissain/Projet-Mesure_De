@@ -17,7 +17,7 @@
    <widget class="QLabel" name="gatewayNameLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>110</y>
       <width>221</width>
       <height>51</height>
@@ -40,9 +40,9 @@
    <widget class="QPushButton" name="AppliquerModification">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>650</y>
-      <width>171</width>
+      <x>440</x>
+      <y>120</y>
+      <width>151</width>
       <height>41</height>
      </rect>
     </property>
@@ -53,7 +53,7 @@
    <widget class="QLabel" name="ipAddressLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>160</y>
       <width>191</width>
       <height>51</height>
@@ -67,7 +67,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>170</y>
+      <y>180</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -76,22 +76,22 @@
    <widget class="QPushButton" name="modifyGatewayButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>110</y>
-      <width>131</width>
+      <width>191</width>
       <height>61</height>
      </rect>
     </property>
     <property name="text">
-     <string>Modifer Paserelle M50</string>
+     <string>Modifer Passerelle M50</string>
     </property>
    </widget>
    <widget class="QPushButton" name="acquisitionModelButton">
     <property name="geometry">
      <rect>
-      <x>200</x>
+      <x>220</x>
       <y>110</y>
-      <width>201</width>
+      <width>191</width>
       <height>61</height>
      </rect>
     </property>
@@ -104,7 +104,7 @@
      <rect>
       <x>420</x>
       <y>110</y>
-      <width>201</width>
+      <width>191</width>
       <height>61</height>
      </rect>
     </property>
@@ -115,34 +115,34 @@
    <widget class="QPushButton" name="returnButton">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>40</y>
-      <width>91</width>
-      <height>51</height>
+      <x>440</x>
+      <y>50</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Retour</string>
     </property>
    </widget>
-   <widget class="QLabel" name="ipAddressPaserelleLabel">
+   <widget class="QLabel" name="ipAddressPasserelleLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>220</y>
       <width>201</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>Nouvelle Adresse Ip de la paserelle:</string>
+     <string>Nouvelle Adresse Ip de la passerelle:</string>
     </property>
    </widget>
    <widget class="QLabel" name="ipAddressMaskLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>290</y>
+      <x>30</x>
+      <y>270</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -154,8 +154,8 @@
    <widget class="QLabel" name="ipAddressDNSLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>360</y>
+      <x>30</x>
+      <y>330</y>
       <width>201</width>
       <height>51</height>
      </rect>
@@ -167,21 +167,21 @@
    <widget class="QLabel" name="TimeZoneLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>430</y>
+      <x>30</x>
+      <y>400</y>
       <width>191</width>
       <height>51</height>
      </rect>
     </property>
     <property name="text">
-     <string>Time zone de la paserelle :</string>
+     <string>Time zone de la passerelle :</string>
     </property>
    </widget>
    <widget class="QLabel" name="DHCPLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>490</y>
+      <x>30</x>
+      <y>460</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -193,8 +193,8 @@
    <widget class="QLabel" name="EtatModbusLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>540</y>
+      <x>30</x>
+      <y>510</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -203,7 +203,7 @@
      <string>Modbus :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="ipAddressPaserelleEdit">
+   <widget class="QLineEdit" name="ipAddressPasserelleEdit">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -217,7 +217,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>300</y>
+      <y>280</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -227,7 +227,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>370</y>
+      <y>340</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -237,7 +237,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>500</y>
+      <y>470</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -247,7 +247,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>550</y>
+      <y>520</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -257,7 +257,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>440</y>
+      <y>410</y>
       <width>181</width>
       <height>31</height>
      </rect>
@@ -266,8 +266,8 @@
    <widget class="QLabel" name="NameModeleAquisitionLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
+      <x>30</x>
+      <y>110</y>
       <width>221</width>
       <height>51</height>
      </rect>
@@ -280,7 +280,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>70</y>
+      <y>120</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -289,10 +289,10 @@
    <widget class="QPushButton" name="returnButton2">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>40</y>
-      <width>91</width>
-      <height>51</height>
+      <x>440</x>
+      <y>50</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -302,10 +302,10 @@
    <widget class="QPushButton" name="returnButton3">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>40</y>
-      <width>91</width>
-      <height>51</height>
+      <x>440</x>
+      <y>50</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -315,7 +315,7 @@
    <widget class="QLabel" name="PeriodeIntegrationInst">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>110</y>
       <width>271</width>
       <height>51</height>
@@ -338,8 +338,8 @@
    <widget class="QLabel" name="status1">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>160</y>
+      <x>30</x>
+      <y>210</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -351,8 +351,8 @@
    <widget class="QLabel" name="status2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>220</y>
+      <x>30</x>
+      <y>270</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -364,8 +364,8 @@
    <widget class="QLabel" name="status3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>290</y>
+      <x>30</x>
+      <y>340</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -378,7 +378,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>170</y>
+      <y>220</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -388,7 +388,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>230</y>
+      <y>280</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -398,7 +398,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>300</y>
+      <y>350</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -407,8 +407,8 @@
    <widget class="QLabel" name="TypeCharge">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>110</y>
+      <x>30</x>
+      <y>160</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -421,7 +421,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>120</y>
+      <y>170</y>
       <width>271</width>
       <height>31</height>
      </rect>
@@ -430,7 +430,7 @@
    <widget class="QLabel" name="PeriodeIntegrationMoy">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>160</y>
       <width>271</width>
       <height>51</height>
@@ -443,7 +443,7 @@
    <widget class="QLabel" name="PeriodeIntegrationCourbe">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>220</y>
       <width>411</width>
       <height>51</height>
@@ -476,8 +476,8 @@
    <widget class="QLabel" name="NameDomaine">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>600</y>
+      <x>30</x>
+      <y>570</y>
       <width>101</width>
       <height>41</height>
      </rect>
@@ -490,7 +490,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>610</y>
+      <y>580</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -500,7 +500,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>20</y>
+      <y>40</y>
       <width>161</width>
       <height>41</height>
      </rect>
@@ -512,29 +512,118 @@
    <widget class="QComboBox" name="PrimaryKey">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>20</y>
+      <x>240</x>
+      <y>40</y>
       <width>151</width>
       <height>31</height>
      </rect>
     </property>
    </widget>
-   <zorder>measureModelButton</zorder>
-   <zorder>acquisitionModelButton</zorder>
-   <zorder>modifyGatewayButton</zorder>
-   <zorder>gatewayNameLabel</zorder>
-   <zorder>gatewayNameEdit</zorder>
+   <widget class="QLineEdit" name="idClientEdit">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>120</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="idClientLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>120</y>
+      <width>121</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nouvelle id Client :</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="returnButton4">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>50</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Retour</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ClientWebButton">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>190</y>
+      <width>191</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Modifier Client Web</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="MDPEdit">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>170</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MDPLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>170</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nouveau Mot de passe :</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="AppliquerModification_2">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>120</y>
+      <width>151</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Appliquer la configuration</string>
+    </property>
+   </widget>
+   <zorder>status1</zorder>
+   <zorder>PeriodeIntegrationMoy</zorder>
+   <zorder>status2</zorder>
+   <zorder>status3</zorder>
+   <zorder>comboBoxStatus3</zorder>
+   <zorder>comboBoxStatus2</zorder>
+   <zorder>PeriodeIntegrationCourbe</zorder>
+   <zorder>comboBoxStatus1</zorder>
+   <zorder>comboBoxCharge</zorder>
    <zorder>AppliquerModification</zorder>
    <zorder>ipAddressLabel</zorder>
    <zorder>ipAddressEdit</zorder>
    <zorder>returnButton</zorder>
-   <zorder>ipAddressPaserelleLabel</zorder>
+   <zorder>ipAddressPasserelleLabel</zorder>
    <zorder>ipAddressMaskLabel</zorder>
    <zorder>ipAddressDNSLabel</zorder>
    <zorder>TimeZoneLabel</zorder>
    <zorder>DHCPLabel</zorder>
    <zorder>EtatModbusLabel</zorder>
-   <zorder>ipAddressPaserelleEdit</zorder>
+   <zorder>ipAddressPasserelleEdit</zorder>
    <zorder>ipAddressMaskEdit</zorder>
    <zorder>ipAddressDNSEdit</zorder>
    <zorder>comboBoxDHCP</zorder>
@@ -546,22 +635,25 @@
    <zorder>returnButton3</zorder>
    <zorder>PeriodeIntegrationInst</zorder>
    <zorder>PeriodeIntegrationInstEdit</zorder>
-   <zorder>status1</zorder>
-   <zorder>status2</zorder>
-   <zorder>status3</zorder>
-   <zorder>comboBoxStatus1</zorder>
-   <zorder>comboBoxStatus2</zorder>
-   <zorder>comboBoxStatus3</zorder>
    <zorder>TypeCharge</zorder>
-   <zorder>comboBoxCharge</zorder>
-   <zorder>PeriodeIntegrationMoy</zorder>
-   <zorder>PeriodeIntegrationCourbe</zorder>
    <zorder>PeriodeIntegrationMoyEdit</zorder>
    <zorder>PeriodeIntegrationCourbeEdit</zorder>
    <zorder>NameDomaine</zorder>
    <zorder>NameDomaineEdit</zorder>
    <zorder>PrimaryKeylabel</zorder>
    <zorder>PrimaryKey</zorder>
+   <zorder>gatewayNameEdit</zorder>
+   <zorder>idClientEdit</zorder>
+   <zorder>idClientLabel</zorder>
+   <zorder>gatewayNameLabel</zorder>
+   <zorder>returnButton4</zorder>
+   <zorder>ClientWebButton</zorder>
+   <zorder>MDPEdit</zorder>
+   <zorder>MDPLabel</zorder>
+   <zorder>AppliquerModification_2</zorder>
+   <zorder>modifyGatewayButton</zorder>
+   <zorder>acquisitionModelButton</zorder>
+   <zorder>measureModelButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

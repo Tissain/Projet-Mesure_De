@@ -11,6 +11,29 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+#include <random>
+#include <string>
+#include <vector>
+#include <iomanip> // Pour l'hexadécimal
+
+std::string generateRandomKey(size_t length) {
+    std::random_device randomDevice;
+    std::mt19937 generator(randomDevice());
+    std::uniform_int_distribution<> distribution(0, 255); // Générer des octets aléatoires
+
+    std::vector<unsigned char> key(length);
+    for (size_t i = 0; i < length; ++i) {
+        key[i] = static_cast<unsigned char>(distribution(generator));
+    }
+
+    // Convertir la clé binaire en une représentation hexadécimale pour le stockage (optionnel mais courant)
+    std::stringstream hexKey;
+    hexKey << std::hex << std::setfill('0');
+    for (unsigned char c : key) {
+        hexKey << std::setw(2) << static_cast<int>(c);
+    }
+    return hexKey.str();
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -26,7 +49,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->gatewayNameLabel->setVisible(false);
     ui->ipAddressLabel->setVisible(false);
     ui->AppliquerModification->setVisible(false);
-    ui->ipAddressPaserelleLabel->setVisible(false);
+    ui->AppliquerModification_2->setVisible(false);
+    ui->ipAddressPasserelleLabel->setVisible(false);
     ui->ipAddressDNSLabel->setVisible(false);
     ui->ipAddressMaskLabel->setVisible(false);
     ui->DHCPLabel->setVisible(false);
@@ -34,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->EtatModbusLabel->setVisible(false);
     ui->comboBoxModbus->setVisible(false);
     ui->TimeZoneLabel->setVisible(false);
-    ui->ipAddressPaserelleEdit->setVisible(false);
+    ui->ipAddressPasserelleEdit->setVisible(false);
     ui->comboBoxTimeZone->setVisible(false);
     ui->ipAddressMaskEdit->setVisible(false);
     ui->ipAddressDNSEdit->setVisible(false);
@@ -43,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->NameModeleAquisitionLabel->setVisible(false);
     ui->returnButton2->setVisible(false);
     ui->returnButton3->setVisible(false);
+    ui->returnButton4->setVisible(false);
     ui->status1->setVisible(false);
     ui->status2->setVisible(false);
     ui->status3->setVisible(false);
@@ -59,6 +84,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->PeriodeIntegrationCourbeEdit->setVisible(false);
     ui->NameDomaineEdit->setVisible(false);
     ui->NameDomaine->setVisible(false);
+    ui->idClientEdit->setVisible(false);
+    ui->idClientLabel->setVisible(false);
+    ui->MDPEdit->setVisible(false);
+    ui->MDPLabel->setVisible(false);
 }
 
 void MainWindow::connectToDatabase()
@@ -119,7 +148,7 @@ void MainWindow::setupUi() {
 void MainWindow::AppliquerModification() {
     QString newName = ui->gatewayNameEdit->text();
     QString newIp = ui->ipAddressEdit->text();
-    QString ipGateway = ui->ipAddressPaserelleEdit->text();
+    QString ipGateway = ui->ipAddressPasserelleEdit->text();
     QString ipMask = ui->ipAddressMaskEdit->text();
     QString ipDNS = ui->ipAddressDNSEdit->text();
     QString newNameModeleAcquisition = ui->NameModeleAcquisitionEdit->text();
@@ -127,6 +156,7 @@ void MainWindow::AppliquerModification() {
     QString PeriodeIntMoy = ui->PeriodeIntegrationMoyEdit->text();
     QString PeriodeIntCourbe = ui->PeriodeIntegrationCourbeEdit->text();
     QString DomaineName = ui->NameDomaineEdit->text();
+    QString idClient = ui->idClientEdit->text();
 
     int timeZoneValue = ui->comboBoxTimeZone->currentData().toInt();
     int DHCP = ui->comboBoxDHCP->currentData().toInt();
@@ -180,6 +210,7 @@ void MainWindow::AppliquerModification() {
     QSqlQuery query(db);
     query.prepare("INSERT INTO Dispositif_Passerelle (ID_Dispositif_PK,"
                   "Nom_dispositif,"
+                  "ID_Client_FK,"
                   "Adresse_IP_Passerelle,"
                   "Adresse_gateway_Passerelle,"
                   "Adresse_mask_gateway_Passerelle,"
@@ -196,9 +227,10 @@ void MainWindow::AppliquerModification() {
                   "Periode_inst,"
                   "Periode_moyenne,"
                   "Periode_courbe) "
-                  "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
+                  "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
                   "ON DUPLICATE KEY UPDATE "
                   "Nom_dispositif = IFNULL(?, Nom_dispositif),"
+                  "ID_Client_FK = IFNULL(?, ID_Client_FK),"
                   "Adresse_IP_Passerelle = IFNULL(?, Adresse_IP_Passerelle),"
                   "Adresse_gateway_Passerelle = IFNULL(?, Adresse_gateway_Passerelle),"
                   "Adresse_mask_gateway_Passerelle = IFNULL(?, Adresse_mask_gateway_Passerelle),"
@@ -219,6 +251,7 @@ void MainWindow::AppliquerModification() {
     // Première série de addBindValue()
     query.addBindValue(idDispositif);
     query.addBindValue(newName.isEmpty() ? QVariant() : newName);
+    query.addBindValue(idClient.isEmpty() ? QVariant() : idClient);
     query.addBindValue(newIp.isEmpty() ? QVariant() : newIp);
     query.addBindValue(ipGateway.isEmpty() ? QVariant() : ipGateway);
     query.addBindValue(ipMask.isEmpty() ? QVariant() : ipMask);
@@ -238,6 +271,7 @@ void MainWindow::AppliquerModification() {
 
     // Seconde série de addBindValue()
     query.addBindValue(newName.isEmpty() ? QVariant() : newName);
+    query.addBindValue(idClient.isEmpty() ? QVariant() : idClient);
     query.addBindValue(newIp.isEmpty() ? QVariant() : newIp);
     query.addBindValue(ipGateway.isEmpty() ? QVariant() : ipGateway);
     query.addBindValue(ipMask.isEmpty() ? QVariant() : ipMask);
@@ -264,6 +298,31 @@ void MainWindow::AppliquerModification() {
     }
 }
 
+void MainWindow::on_AppliquerModification_2_clicked()
+{
+    QString idClient = ui->idClientEdit->text();
+    QString MDP = ui->MDPEdit->text();
+
+    QSqlQuery query(db);
+    query.prepare("INSERT INTO Client_Web (`ID_Client_PK`, `Mot_de_passe`) VALUES (?, AES_DECRYPT(?, ?)) "
+                  "ON DUPLICATE KEY UPDATE "
+                  "ID_Client_PK = IFNULL(?, ID_Client_PK), "
+                  "Mot_de_passe = IFNULL(?, Mot_de_passe);");
+
+    query.addBindValue(idClient.isEmpty() ? QVariant() : idClient);
+    query.addBindValue(MDP);
+    query.addBindValue(idClient.isEmpty() ? QVariant() : idClient);
+    query.addBindValue(MDP);
+
+    if (!query.exec()) {
+        QSqlError error = query.lastError();
+        QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la modification du Client Web: %1").arg(error.text()));
+        qDebug() << "Erreur SQL (ID Protocole):" << error.text() << " Requête: " << query.lastQuery();
+    } else {
+        QMessageBox::information(this, "Succès", "Information Client mise à jour");
+    }
+}
+
 void MainWindow::modifyGatewayButtonClicked() {
     ui->gatewayNameEdit->setVisible(true);
     ui->ipAddressEdit->setVisible(true);
@@ -274,7 +333,8 @@ void MainWindow::modifyGatewayButtonClicked() {
     ui->modifyGatewayButton->setVisible(false);
     ui->acquisitionModelButton->setVisible(false);
     ui->measureModelButton->setVisible(false);
-    ui->ipAddressPaserelleLabel->setVisible(true);
+    ui->ClientWebButton->setVisible(false);
+    ui->ipAddressPasserelleLabel->setVisible(true);
     ui->ipAddressDNSLabel->setVisible(true);
     ui->ipAddressMaskLabel->setVisible(true);
     ui->DHCPLabel->setVisible(true);
@@ -282,7 +342,7 @@ void MainWindow::modifyGatewayButtonClicked() {
     ui->EtatModbusLabel->setVisible(true);
     ui->comboBoxModbus->setVisible(true);
     ui->TimeZoneLabel->setVisible(true);
-    ui->ipAddressPaserelleEdit->setVisible(true);
+    ui->ipAddressPasserelleEdit->setVisible(true);
     ui->comboBoxTimeZone->setVisible(true);
     ui->ipAddressMaskEdit->setVisible(true);
     ui->ipAddressDNSEdit->setVisible(true);
@@ -300,7 +360,8 @@ void MainWindow::returnButtonClicked() {
     ui->modifyGatewayButton->setVisible(true);
     ui->acquisitionModelButton->setVisible(true);
     ui->measureModelButton->setVisible(true);
-    ui->ipAddressPaserelleLabel->setVisible(false);
+    ui->ClientWebButton->setVisible(true);
+    ui->ipAddressPasserelleLabel->setVisible(false);
     ui->ipAddressDNSLabel->setVisible(false);
     ui->ipAddressMaskLabel->setVisible(false);
     ui->DHCPLabel->setVisible(false);
@@ -308,13 +369,13 @@ void MainWindow::returnButtonClicked() {
     ui->EtatModbusLabel->setVisible(false);
     ui->comboBoxModbus->setVisible(false);
     ui->TimeZoneLabel->setVisible(false);
-    ui->ipAddressPaserelleEdit->setVisible(false);
+    ui->ipAddressPasserelleEdit->setVisible(false);
     ui->comboBoxTimeZone->setVisible(false);
     ui->ipAddressMaskEdit->setVisible(false);
     ui->ipAddressDNSEdit->setVisible(false);
     ui->NameDomaineEdit->setVisible(false);
     ui->NameDomaine->setVisible(false);
-    resetInputFields(); // Appel de la fonction de réinitialisation
+    resetInputFields();
 }
 
 void MainWindow::acquisitionModelButtonClicked() {
@@ -323,6 +384,7 @@ void MainWindow::acquisitionModelButtonClicked() {
     ui->modifyGatewayButton->setVisible(false);
     ui->acquisitionModelButton->setVisible(false);
     ui->measureModelButton->setVisible(false);
+    ui->ClientWebButton->setVisible(false);
     ui->returnButton2->setVisible(true);
     ui->AppliquerModification->setVisible(true);
     ui->status1->setVisible(true);
@@ -340,6 +402,7 @@ void MainWindow::returnButtonClicked2()
     ui->modifyGatewayButton->setVisible(true);
     ui->acquisitionModelButton->setVisible(true);
     ui->measureModelButton->setVisible(true);
+    ui->ClientWebButton->setVisible(true);
     ui->NameModeleAcquisitionEdit->setVisible(false);
     ui->NameModeleAquisitionLabel->setVisible(false);
     ui->returnButton2->setVisible(false);
@@ -352,7 +415,7 @@ void MainWindow::returnButtonClicked2()
     ui->comboBoxStatus3->setVisible(false);
     ui->TypeCharge->setVisible(false);
     ui->comboBoxCharge->setVisible(false);
-    resetInputFields(); // Appel de la fonction de réinitialisation
+    resetInputFields();
 
 }
 
@@ -361,6 +424,7 @@ void MainWindow::measureModelButtonClicked() {
     ui->modifyGatewayButton->setVisible(false);
     ui->acquisitionModelButton->setVisible(false);
     ui->measureModelButton->setVisible(false);
+    ui->ClientWebButton->setVisible(false);
     ui->AppliquerModification->setVisible(true);
     ui->PeriodeIntegrationInst->setVisible(true);
     ui->PeriodeIntegrationInstEdit->setVisible(true);
@@ -374,6 +438,7 @@ void MainWindow::returnButtonClicked3()
     ui->modifyGatewayButton->setVisible(true);
     ui->acquisitionModelButton->setVisible(true);
     ui->measureModelButton->setVisible(true);
+    ui->ClientWebButton->setVisible(true);
     ui->returnButton3->setVisible(false);
     ui->AppliquerModification->setVisible(false);
     ui->PeriodeIntegrationInst->setVisible(false);
@@ -382,14 +447,14 @@ void MainWindow::returnButtonClicked3()
     ui->PeriodeIntegrationMoyEdit->setVisible(false);
     ui->PeriodeIntegrationCourbe->setVisible(false);
     ui->PeriodeIntegrationCourbeEdit->setVisible(false);
-    resetInputFields(); // Appel de la fonction de réinitialisation
+    resetInputFields();
 }
 
 void MainWindow::resetInputFields()
 {
     ui->gatewayNameEdit->clear();
     ui->ipAddressEdit->clear();
-    ui->ipAddressPaserelleEdit->clear();
+    ui->ipAddressPasserelleEdit->clear();
     ui->ipAddressMaskEdit->clear();
     ui->ipAddressDNSEdit->clear();
     ui->NameModeleAcquisitionEdit->clear();
@@ -397,6 +462,7 @@ void MainWindow::resetInputFields()
     ui->PeriodeIntegrationMoyEdit->clear();
     ui->PeriodeIntegrationCourbeEdit->clear();
     ui->NameDomaineEdit->clear();
+    ui->idClientEdit->clear();
 
     ui->comboBoxTimeZone->setCurrentIndex(0);
     ui->comboBoxDHCP->setCurrentIndex(0);
@@ -407,3 +473,37 @@ void MainWindow::resetInputFields()
     ui->comboBoxCharge->setCurrentIndex(0);
     ui->PrimaryKey->setCurrentIndex(0);
 }
+
+void MainWindow::on_ClientWebButton_clicked()
+{
+    ui->idClientEdit->setVisible(true);
+    ui->idClientLabel->setVisible(true);
+    ui->MDPEdit->setVisible(true);
+    ui->MDPLabel->setVisible(true);
+    ui->returnButton4->setVisible(true);
+    ui->AppliquerModification_2->setVisible(true);
+    ui->modifyGatewayButton->setVisible(false);
+    ui->acquisitionModelButton->setVisible(false);
+    ui->measureModelButton->setVisible(false);
+    ui->ClientWebButton->setVisible(false);
+}
+
+
+
+void MainWindow::on_returnButton4_clicked()
+{
+    ui->modifyGatewayButton->setVisible(true);
+    ui->acquisitionModelButton->setVisible(true);
+    ui->measureModelButton->setVisible(true);
+    ui->ClientWebButton->setVisible(true);
+    ui->AppliquerModification_2->setVisible(false);
+    ui->idClientEdit->setVisible(false);
+    ui->idClientLabel->setVisible(false);
+    ui->MDPEdit->setVisible(false);
+    ui->MDPLabel->setVisible(false);
+    ui->returnButton4->setVisible(false);
+    resetInputFields();
+}
+
+
+

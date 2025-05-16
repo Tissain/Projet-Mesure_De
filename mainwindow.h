@@ -31,6 +31,12 @@ private slots:
     void returnButtonClicked3();
     void resetInputFields();
 
+    void on_ClientWebButton_clicked();
+
+    void on_returnButton4_clicked();
+
+    void on_AppliquerModification_2_clicked();
+
 private:
     void setupUi();
 
