@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->showHideButton->setVisible(false);
     connect(ui->showHideButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
     ui->showHideButton->setIcon(QIcon("C:/Users/EtudiantIR2/Documents/Appli_BDD/preview-show-interface-icon-free-vector.jpg"));
-    ui->showHideButton->setIconSize(QSize(26, 26)); // Définir la taille de l'icône (optionnel)
+    ui->showHideButton->setIconSize(QSize(26, 26)); // Définir la taille de l'icône
 }
 
 void MainWindow::connectToDatabase()
@@ -77,7 +77,8 @@ void MainWindow::connectToDatabase()
     }
 }
 
-void MainWindow::setupUi() {
+void MainWindow::setupUi()
+{
     connect(ui->AppliquerModification, &QPushButton::clicked, this, &MainWindow::AppliquerModification);
     connect(ui->modifyGatewayButton, &QPushButton::clicked, this, &MainWindow::modifyGatewayButtonClicked);
     connect(ui->acquisitionModelButton, &QPushButton::clicked, this, &MainWindow::acquisitionModelButtonClicked);
@@ -98,7 +99,8 @@ void MainWindow::setupUi() {
 }
 
 
-void MainWindow::AppliquerModification() {
+void MainWindow::AppliquerModification()
+{
     QString newName = ui->gatewayNameEdit->text();
     QString newIp = ui->ipAddressEdit->text();
     QString ipGateway = ui->ipAddressPasserelleEdit->text();
@@ -231,17 +233,20 @@ void MainWindow::on_AppliquerModification_2_clicked()
     int idDispositif = ui->PrimaryKey->currentData().toInt();
 
     // Vérifications d'entrée
-    if (idDispositif == -1) {
+    if (idDispositif == -1)
+    {
         QMessageBox::warning(this, "Avertissement", "Veuillez sélectionner un ID de Dispositif.");
         return;
     }
 
-    if (idClient.isEmpty()) {
+    if (idClient.isEmpty())
+    {
         QMessageBox::warning(this, "Avertissement", "Veuillez saisir un ID client.");
         return;
     }
 
-    if (MDP.isEmpty()) {
+    if (MDP.isEmpty())
+    {
         QMessageBox::warning(this, "Avertissement", "Veuillez saisir un Mot de passe.");
         return;
     }
@@ -266,7 +271,8 @@ void MainWindow::on_AppliquerModification_2_clicked()
 
     qDebug() << "ID:" << idClient << "HASH:" << hash << "SEL:" << sel;
 
-    if (!queryClientWeb.exec()) {
+    if (!queryClientWeb.exec())
+    {
         QSqlError error = queryClientWeb.lastError();
         QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la modification du Client Web: %1").arg(error.text()));
         qDebug() << "Erreur SQL (Client Web):" << error.text() << " Requête: " << queryClientWeb.lastQuery();
@@ -294,12 +300,14 @@ void MainWindow::on_AppliquerModification_2_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    if (passwordVisible) {
+    if (passwordVisible)
+    {
         // Le mot de passe est actuellement visible, masquez-le
         ui->MDPEdit->setEchoMode(QLineEdit::Password);
         ui->showHideButton->setIcon(QIcon("C:/Users/EtudiantIR2/Documents/Appli_BDD/preview-show-interface-icon-free-vector.jpg")); // Icône "œil fermé"
         passwordVisible = false;
-    } else {
+    } else
+    {
         // Le mot de passe est actuellement masqué, affichez-le
         ui->MDPEdit->setEchoMode(QLineEdit::Normal);
         ui->showHideButton->setIcon(QIcon("C:/Users/EtudiantIR2/Documents/Appli_BDD/eye-slash-icon-symbol-design-illustration-vector.jpg")); // Icône "œil ouvert" ou "œil barré"
@@ -307,7 +315,8 @@ void MainWindow::on_pushButton_clicked()
     }
 }
 
-void MainWindow::modifyGatewayButtonClicked() {
+void MainWindow::modifyGatewayButtonClicked()
+{
     ui->PrimaryKey->setVisible(true);
     ui->PrimaryKeylabel->setVisible(true);
     ui->gatewayNameEdit->setVisible(true);
@@ -332,7 +341,8 @@ void MainWindow::modifyGatewayButtonClicked() {
     ui->NameDomaine->setVisible(true);
 }
 
-void MainWindow::returnButtonClicked() {
+void MainWindow::returnButtonClicked()
+{
     ui->PrimaryKey->setVisible(false);
     ui->PrimaryKeylabel->setVisible(false);
     ui->gatewayNameEdit->setVisible(false);
@@ -358,7 +368,8 @@ void MainWindow::returnButtonClicked() {
     resetInputFields();
 }
 
-void MainWindow::acquisitionModelButtonClicked() {
+void MainWindow::acquisitionModelButtonClicked()
+{
     ui->PrimaryKey->setVisible(true);
     ui->PrimaryKeylabel->setVisible(true);
     ui->NameModeleAcquisitionEdit->setVisible(true);
@@ -391,7 +402,8 @@ void MainWindow::returnButtonClicked2()
 
 }
 
-void MainWindow::measureModelButtonClicked() {
+void MainWindow::measureModelButtonClicked()
+{
     ui->PrimaryKey->setVisible(true);
     ui->PrimaryKeylabel->setVisible(true);
     ui->returnButton3->setVisible(true);
