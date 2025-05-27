@@ -61,7 +61,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->showHideButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
     ui->showHideButton->setIcon(QIcon("C:/Users/EtudiantIR2/Documents/Appli_BDD/preview-show-interface-icon-free-vector.jpg"));
     ui->showHideButton->setIconSize(QSize(26, 26)); // Définir la taille de l'icône (optionnel)
-    //adjustSize();
 }
 
 void MainWindow::connectToDatabase()
@@ -261,6 +260,7 @@ void MainWindow::on_AppliquerModification_2_clicked()
     queryClientWeb.addBindValue(idClient);
     queryClientWeb.addBindValue(hash);
     queryClientWeb.addBindValue(sel);
+
     queryClientWeb.addBindValue(hash);
     queryClientWeb.addBindValue(sel);
 
@@ -441,8 +441,6 @@ void MainWindow::resetInputFields()
 
 void MainWindow::on_ClientWebButton_clicked()
 {
-    ui->PrimaryKey->setVisible(true);
-    ui->PrimaryKeylabel->setVisible(true);
     ui->idClientEdit->setVisible(true);
     ui->idClientLabel->setVisible(true);
     ui->MDPEdit->setVisible(true);

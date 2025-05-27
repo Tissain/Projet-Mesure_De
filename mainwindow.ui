@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>634</width>
-    <height>525</height>
+    <width>633</width>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -385,7 +385,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>120</y>
+      <y>60</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -395,7 +395,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>120</y>
+      <y>60</y>
       <width>121</width>
       <height>31</height>
      </rect>
@@ -434,7 +434,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>190</y>
+      <y>120</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -447,7 +447,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>190</y>
+      <y>130</y>
       <width>141</width>
       <height>21</height>
      </rect>
@@ -473,7 +473,7 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>190</y>
+      <y>120</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -497,6 +497,7 @@
      <bool>false</bool>
     </property>
    </widget>
+   <zorder>ClientWebButton</zorder>
    <zorder>acquisitionModelButton</zorder>
    <zorder>PeriodeIntegrationMoy</zorder>
    <zorder>comboBoxCharge</zorder>
@@ -527,7 +528,6 @@
    <zorder>idClientLabel</zorder>
    <zorder>gatewayNameLabel</zorder>
    <zorder>returnButton4</zorder>
-   <zorder>ClientWebButton</zorder>
    <zorder>MDPLabel</zorder>
    <zorder>AppliquerModification_2</zorder>
    <zorder>modifyGatewayButton</zorder>
@@ -542,7 +542,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>634</width>
+     <width>633</width>
      <height>22</height>
     </rect>
    </property>
