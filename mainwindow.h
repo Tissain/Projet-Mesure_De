@@ -37,6 +37,8 @@ private slots:
 
     void on_AppliquerModification_2_clicked();
 
+    void on_pushButton_clicked();
+
 private:
     void setupUi();
 
@@ -46,6 +48,10 @@ private:
     QString filePathMesure;
     QSqlDatabase db;
     QNetworkAccessManager *networkManager;
+    bool passwordVisible; // Pour suivre l'état du mot de passe
+
+    const std::string MASTER_AES_KEY_HEX = "0123456789abcdef0123456789abcdef"; // 16 octets / 32 hex chars
+    const std::string MASTER_AES_IV_HEX = "fedcba9876543210fedcba9876543210";   // 16 octets / 32 hex chars
 };
 
 #endif // MAINWINDOW_H

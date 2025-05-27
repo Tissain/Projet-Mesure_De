@@ -1,7 +1,8 @@
 QT       += core gui
 QT += sql
 QT += network
-
+RESOURCES += resources.qrc
+INCLUDEPATH += "C:/OpenSSL-Win64/include"
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,3 +26,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    image.qrc
