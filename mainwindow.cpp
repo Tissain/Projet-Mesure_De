@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->PrimaryKey->setVisible(false);
     ui->PrimaryKeylabel->setVisible(false);
     ui->showHideButton->setVisible(false);
-    connect(ui->showHideButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
+    connect(ui->showHideButton, &QPushButton::clicked, this, &MainWindow::showHideButton);
     ui->showHideButton->setIcon(QIcon("C:/Users/EtudiantIR2/Documents/Appli_BDD/preview-show-interface-icon-free-vector.jpg"));
     ui->showHideButton->setIconSize(QSize(26, 26)); // Définir la taille de l'icône
 }
@@ -109,8 +109,8 @@ void MainWindow::AppliquerModification()
     QString newNameModeleAcquisition = ui->NameModeleAcquisitionEdit->text();
     QString DomaineName = ui->NameDomaineEdit->text();
     QString idClient = ui->idClientEdit->text();
-    QString periodeInst = ui->PeriodeIntegrationInstEdit->text(); // ou .value() si c'est un QSpinBox
-    QString periodeMoy = ui->PeriodeIntegrationMoyEdit->text();   // idem
+    QString periodeInst = ui->PeriodeIntegrationInstEdit->text();
+    QString periodeMoy = ui->PeriodeIntegrationMoyEdit->text();
 
     int DHCP = ui->comboBoxDHCP->currentData().toInt();
     int phase = ui->comboBoxCharge->currentData().toInt();
@@ -133,8 +133,6 @@ void MainWindow::AppliquerModification()
             QSqlError error = queryProtocole.lastError();
             QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la modification de l'ID Protocole: %1").arg(error.text()));
             qDebug() << "Erreur SQL (ID Protocole):" << error.text() << " Requête: " << queryProtocole.lastQuery();
-        } else {
-            QMessageBox::information(this, "Succès", "Type de Protocole envoyer");
         }
     }
 
@@ -148,8 +146,6 @@ void MainWindow::AppliquerModification()
             QSqlError error = queryProtocole.lastError();
             QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la modification de l'ID Protocole: %1").arg(error.text()));
             qDebug() << "Erreur SQL (ID Protocole):" << error.text() << " Requête: " << queryProtocole.lastQuery();
-        } else {
-            QMessageBox::information(this, "Succès", "Type de Protocole envoyer");
         }
     }
 
@@ -230,14 +226,6 @@ void MainWindow::on_AppliquerModification_2_clicked()
 {
     QString idClient = ui->idClientEdit->text();
     QString MDP = ui->MDPEdit->text(); // Mot de passe en clair
-    int idDispositif = ui->PrimaryKey->currentData().toInt();
-
-    // Vérifications d'entrée
-    if (idDispositif == -1)
-    {
-        QMessageBox::warning(this, "Avertissement", "Veuillez sélectionner un ID de Dispositif.");
-        return;
-    }
 
     if (idClient.isEmpty())
     {
@@ -250,6 +238,7 @@ void MainWindow::on_AppliquerModification_2_clicked()
         QMessageBox::warning(this, "Avertissement", "Veuillez saisir un Mot de passe.");
         return;
     }
+
     quint64 randValue = QRandomGenerator::system()->generate64();
     QByteArray sel = QByteArray::number(randValue).toHex();
 
@@ -269,8 +258,6 @@ void MainWindow::on_AppliquerModification_2_clicked()
     queryClientWeb.addBindValue(hash);
     queryClientWeb.addBindValue(sel);
 
-    qDebug() << "ID:" << idClient << "HASH:" << hash << "SEL:" << sel;
-
     if (!queryClientWeb.exec())
     {
         QSqlError error = queryClientWeb.lastError();
@@ -280,35 +267,17 @@ void MainWindow::on_AppliquerModification_2_clicked()
     } else {
         QMessageBox::information(this, "Succès", "Information Client mise à jour dans Client_Web.");
     }
-/*
-    QSqlQuery queryDispositifPasserelle(db);
-    queryDispositifPasserelle.prepare("INSERT INTO Dispositif_Passerelle (ID_Dispositif_PK, ID_Client_FK) "
-                                      "VALUES (?, ?) "
-                                      "ON DUPLICATE KEY UPDATE "
-                                      "ID_Client_FK = VALUES(ID_Client_FK);"); // Met à jour ID_Client_FK avec la nouvelle valeur
-
-    // Liaison des valeurs pour Dispositif_Passerelle
-    queryDispositifPasserelle.addBindValue(idDispositif); // L'ID du dispositif
-    queryDispositifPasserelle.addBindValue(idClient);     // L'ID du client à lier
-
-    if (!queryDispositifPasserelle.exec()) {
-        QSqlError error = queryDispositifPasserelle.lastError();
-        QMessageBox::critical(this, "Erreur SQL", QString("Erreur lors de la mise à jour de Dispositif_Passerelle avec l'ID client: %1").arg(error.text()));
-        qDebug() << "Erreur SQL (Dispositif_Passerelle):" << error.text() << " Requête: " << queryDispositifPasserelle.lastQuery();
-    }*/
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::showHideButton()
 {
     if (passwordVisible)
     {
-        // Le mot de passe est actuellement visible, masquez-le
         ui->MDPEdit->setEchoMode(QLineEdit::Password);
         ui->showHideButton->setIcon(QIcon("C:/Users/EtudiantIR2/Documents/Appli_BDD/preview-show-interface-icon-free-vector.jpg")); // Icône "œil fermé"
         passwordVisible = false;
     } else
     {
-        // Le mot de passe est actuellement masqué, affichez-le
         ui->MDPEdit->setEchoMode(QLineEdit::Normal);
         ui->showHideButton->setIcon(QIcon("C:/Users/EtudiantIR2/Documents/Appli_BDD/eye-slash-icon-symbol-design-illustration-vector.jpg")); // Icône "œil ouvert" ou "œil barré"
         passwordVisible = true;

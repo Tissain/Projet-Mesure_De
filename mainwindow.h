@@ -37,7 +37,7 @@ private slots:
 
     void on_AppliquerModification_2_clicked();
 
-    void on_pushButton_clicked();
+    void showHideButton();
 
 private:
     void setupUi();

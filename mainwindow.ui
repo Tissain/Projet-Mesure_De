@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MesureDe</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="gatewayNameLabel">
@@ -76,7 +76,7 @@
    <widget class="QPushButton" name="modifyGatewayButton">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>100</x>
       <y>50</y>
       <width>191</width>
       <height>61</height>
@@ -89,7 +89,7 @@
    <widget class="QPushButton" name="acquisitionModelButton">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>340</x>
       <y>50</y>
       <width>191</width>
       <height>61</height>
@@ -102,8 +102,8 @@
    <widget class="QPushButton" name="measureModelButton">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>50</y>
+      <x>100</x>
+      <y>130</y>
       <width>191</width>
       <height>61</height>
      </rect>
@@ -420,7 +420,7 @@
    <widget class="QPushButton" name="ClientWebButton">
     <property name="geometry">
      <rect>
-      <x>220</x>
+      <x>340</x>
       <y>130</y>
       <width>191</width>
       <height>61</height>
@@ -434,7 +434,7 @@
     <property name="geometry">
      <rect>
       <x>250</x>
-      <y>120</y>
+      <y>130</y>
       <width>151</width>
       <height>31</height>
      </rect>
@@ -473,7 +473,7 @@
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>120</y>
+      <y>130</y>
       <width>31</width>
       <height>31</height>
      </rect>
@@ -497,7 +497,6 @@
      <bool>false</bool>
     </property>
    </widget>
-   <zorder>ClientWebButton</zorder>
    <zorder>acquisitionModelButton</zorder>
    <zorder>PeriodeIntegrationMoy</zorder>
    <zorder>comboBoxCharge</zorder>
@@ -535,6 +534,7 @@
    <zorder>ipAddressMaskEdit</zorder>
    <zorder>idClientEdit</zorder>
    <zorder>MDPEdit</zorder>
+   <zorder>ClientWebButton</zorder>
    <zorder>showHideButton</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
